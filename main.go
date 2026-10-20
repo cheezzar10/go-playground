@@ -8,19 +8,6 @@ import (
 	"unicode/utf8"
 )
 
-type Car struct {
-	Maker string `json:"maker"`
-	Model string `json:"model"`
-}
-
-func New(maker string, model string) *Car {
-	return &Car{maker, model}
-}
-
-type Ctx interface {
-	Do()
-}
-
 func jsonWriteDemo() {
 	fmt.Println("*** json write demo ***")
 	car := Car{"Mercedes-Benz", "E200d"}
