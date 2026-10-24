@@ -62,8 +62,7 @@ func structDemo() {
 
 func errorHandlingDemo() {
 	var newErr error = errors.New("some error")
-	newErrType := reflect.TypeOf(newErr)
-	fmt.Printf("new error type: %s\n", newErrType)
+	fmt.Printf("new error type: %T\n", newErr)
 
 	_, err := os.Open("missing.file")
 	if err != nil {
