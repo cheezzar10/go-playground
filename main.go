@@ -1,8 +1,9 @@
 package main
 
+// migrate to encoding/json/v2
 import (
 	"context"
-	"encoding/json/v2"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"unicode/utf8"
