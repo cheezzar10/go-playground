@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "mws": {
+      "name": "MWS",
+      "env": ["MWS_API_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://gpt.mwsapis.ru/projects/project-cheezzar10/openai/v1",
+      },
+      "models": {
+        "glm-5-3": {
+          "name": "GLM 5.3",
+        },
+      },
+    },
+  },
+}

@@ -9,11 +9,13 @@ import (
 	"os"
 	"reflect"
 	"unicode/utf8"
+
+	"github.com/cheezzar10/go-playground/model"
 )
 
 func jsonWriteDemo() {
 	fmt.Println("*** json write demo ***")
-	car := Car{"Mercedes-Benz", "E200d"}
+	car := model.Car{Maker: "Mercedes-Benz", Model: "E200d"}
 	// passing pointer idiomatically
 	out, err := json.Marshal(&car)
 	if err != nil {
@@ -25,7 +27,7 @@ func jsonWriteDemo() {
 
 func interfaceVarDemo() {
 	fmt.Println("*** initial context demo ***")
-	var ctx Ctx
+	var ctx model.Ctx
 	fmt.Printf("context: %v\n", ctx)
 }
 
@@ -36,7 +38,7 @@ func backgroundContextDemo() {
 
 func typeAssertDemo(obj any) {
 	// pointer type assertion should be explicit
-	if car, ok := obj.(*Car); ok {
+	if car, ok := obj.(*model.Car); ok {
 		fmt.Printf("it's a car %v\n", car)
 	} else {
 		fmt.Println("it's not a car")
@@ -44,7 +46,7 @@ func typeAssertDemo(obj any) {
 }
 
 func reflectDemo() {
-	var obj any = New("Audi", "A6")
+	var obj any = model.New("Audi", "A6")
 	objType := reflect.TypeOf(obj)
 	fmt.Printf("obj type: %s\n", objType)
 }
@@ -52,7 +54,7 @@ func reflectDemo() {
 func structDemo() {
 	fmt.Println("*** struct demo ***")
 	// var car Car
-	car := Car{"BMW", "320d"}
+	car := model.Car{Maker: "BMW", Model: "320d"}
 	fmt.Printf("Car: {'%s'}\n", car.Maker)
 	fmt.Printf("Car maker len: %d\n", len(car.Maker))
 	if utf8.RuneCountInString(car.Maker) > 0 {
@@ -80,7 +82,7 @@ func main() {
 	interfaceVarDemo()
 	backgroundContextDemo()
 
-	car := &Car{"Mercedes-Benz", "E200d"}
+	car := &model.Car{Maker: "Mercedes-Benz", Model: "E200d"}
 	typeAssertDemo(car)
 
 	reflectDemo()

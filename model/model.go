@@ -1,4 +1,4 @@
-package main
+package model
 
 type Car struct {
 	Maker string `json:"maker"`
