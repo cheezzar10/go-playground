@@ -4,7 +4,9 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"os"
 	"reflect"
 	"unicode/utf8"
 )
@@ -58,6 +60,21 @@ func structDemo() {
 	}
 }
 
+func errorHandlingDemo() {
+	var newErr error = errors.New("some error")
+	newErrType := reflect.TypeOf(newErr)
+	fmt.Printf("new error type: %s\n", newErrType)
+
+	_, err := os.Open("missing.file")
+	if err != nil {
+		fmt.Printf("error: %s\n", err)
+		fmt.Printf("failed to open file: %s\n", err.Error())
+
+		errType := reflect.TypeOf(err)
+		fmt.Printf("error type: %s\n", errType)
+	}
+}
+
 func main() {
 	structDemo()
 	jsonWriteDemo()
@@ -68,4 +85,5 @@ func main() {
 	typeAssertDemo(car)
 
 	reflectDemo()
+	errorHandlingDemo()
 }
