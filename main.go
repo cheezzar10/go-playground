@@ -10,6 +10,7 @@ import (
 	"reflect"
 	"unicode/utf8"
 
+	"github.com/cheezzar10/go-playground/lang"
 	"github.com/cheezzar10/go-playground/model"
 )
 
@@ -87,4 +88,7 @@ func main() {
 
 	reflectDemo()
 	errorHandlingDemo()
+
+	lang.IterateNilSlice()
+	lang.NamedReturnsDemo()
 }
