@@ -89,6 +89,8 @@ func main() {
 	reflectDemo()
 	errorHandlingDemo()
 
-	lang.IterateNilSlice()
-	lang.NamedReturnsDemo()
+	// lang.IterateNilSlice()
+	// lang.NamedReturnsDemo()
+	lang.MapsDemo()
+	lang.ValuesMapDemo()
 }

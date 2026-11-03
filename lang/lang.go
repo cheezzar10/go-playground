@@ -3,6 +3,9 @@ package lang
 import (
 	"fmt"
 	"strings"
+	"unsafe"
+
+	m "github.com/cheezzar10/go-playground/model"
 )
 
 func makeNilSlice() []string {
@@ -50,4 +53,38 @@ func NamedReturnsDemo() {
 	groupId, artifactId := namedReturns("org.springframework:spring-core")
 	fmt.Printf("groupId length: %d\n", len(groupId))
 	fmt.Printf("group: '%s', artifact: '%s'\n", groupId, artifactId)
+}
+
+func MapsDemo() {
+	carId := "BMW:320d"
+	cars := map[string]*m.Car{
+		carId: {Maker: "BMW", Model: "320d"},
+	}
+
+	car := cars[carId]
+	fmt.Printf("sizeof a pointer to a car: %d\n", unsafe.Sizeof(car))
+	fmt.Printf("car with id %s = %+v\n", carId, car)
+
+	cars["nil"] = nil
+	nilCar := cars["nil"]
+	fmt.Printf("nil car: %+v\n", nilCar)
+
+	missingCar, ok := cars["missing"]
+	fmt.Printf("missing car: %+v\n", missingCar)
+	fmt.Printf("missing car found: %t\n", ok)
+}
+
+func ValuesMapDemo() {
+	cars := map[string]m.Car{}
+	cars["BMW:330d"] = m.Car{
+		Maker: "BMW",
+		Model: "330d",
+	}
+
+	// empty struct{}{} value has zero size
+
+	car := cars["nil"]
+	// it's not possible to compare car with nil
+	fmt.Printf("car value: %+v\n", car)
+	fmt.Printf("sizeof Car value: %d\n", unsafe.Sizeof(car))
 }
