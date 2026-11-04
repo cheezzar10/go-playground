@@ -1,0 +1,14 @@
+*** Go books to read
+
+Go by example
+powerful command line applications in go
+learn concurrent programming in go
+
+*** Learn Go open questinons
+
+how to use copy function
+
+*** working with go toolchain
+
+how to lint 
+how to format

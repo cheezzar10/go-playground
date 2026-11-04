@@ -77,6 +77,15 @@ func errorHandlingDemo() {
 	}
 }
 
+func langDemo() {
+	// lang.IterateNilSlice()
+	// lang.NamedReturnsDemo()
+	// lang.MapsDemo()
+	// lang.ValuesMapDemo()
+	// lang.SliceOfLongsDemo()
+	lang.SliceCopyDemo()
+}
+
 func main() {
 	structDemo()
 	jsonWriteDemo()
@@ -89,8 +98,5 @@ func main() {
 	reflectDemo()
 	errorHandlingDemo()
 
-	// lang.IterateNilSlice()
-	// lang.NamedReturnsDemo()
-	lang.MapsDemo()
-	lang.ValuesMapDemo()
+	langDemo()
 }

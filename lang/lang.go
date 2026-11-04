@@ -88,3 +88,26 @@ func ValuesMapDemo() {
 	fmt.Printf("car value: %+v\n", car)
 	fmt.Printf("sizeof Car value: %d\n", unsafe.Sizeof(car))
 }
+
+func SliceOfLongsDemo() {
+	nums := make([]int64, 4)
+	fmt.Printf("longs type: %T\n", nums)
+
+	fmt.Printf("longs length: %d\n", len(nums))
+	fmt.Printf("longs capacity: %d\n", cap(nums))
+
+	// experiment with slicing and growing in length without reallocation
+}
+
+func SliceCopyDemo() {
+	src := []int32{1, 2, 3, 4, 5, 6}
+	fmt.Println("source:", src)
+	dst := make([]int32, 4, 16)
+	fmt.Println("(before copy) destination:", dst)
+	fmt.Printf("(before copy) destination length: %d, capacity: %d\n", len(dst), cap(dst))
+	copied := copy(dst, src)
+	fmt.Printf("%d elements copied\n", copied)
+	fmt.Println("(after copy) destination:", dst)
+	fmt.Printf("(after copy) destination length: %d, capacity: %d\n", len(dst), cap(dst))
+
+}
