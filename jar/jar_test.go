@@ -1,7 +1,6 @@
 package jar
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
