@@ -2,30 +2,10 @@ package util
 
 import (
 	"crypto/sha256"
-	"io"
-	"os"
 )
 
-func ShaSum256(path string) ([]byte, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-
-	defer f.Close()
-
-	buf := make([]byte, 4096)
+func ShaSum256(data []byte) ([]byte, error) {
 	hash := sha256.New()
-	for {
-		n, err := f.Read(buf)
-		hash.Write(buf[:n])
-		if err != nil {
-			if err != io.EOF {
-				return nil, err
-			}
-			break
-		}
-	}
-
+	hash.Write(data)
 	return hash.Sum(nil), nil
 }
