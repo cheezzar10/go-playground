@@ -25,3 +25,8 @@ $ go install github.com/golangci/golines@v0.16.0
 *** formatting code with golines
 
 $ golines -w .
+
+*** installing go version locally
+
+$ go install golang.org/dl/go1.27.3@latest
+$ go1.27.3 download
