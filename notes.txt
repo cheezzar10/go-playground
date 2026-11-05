@@ -10,5 +10,18 @@ how to use copy function
 
 *** working with go toolchain
 
-how to lint 
-how to format
+*** installing staticcheck
+
+$ go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+
+*** linting with staticcheck
+
+$ staticcheck ./...
+
+*** installing golines
+
+$ go install github.com/golangci/golines@v0.16.0
+
+*** formatting code with golines
+
+$ golines -w .

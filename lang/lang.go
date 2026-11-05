@@ -27,10 +27,7 @@ func IterateNilSlice() {
 
 func namedReturns(packageName string) (groupId string, artifactId string) {
 	f := func(pn string) bool {
-		if len(pn) > len(groupId) {
-			return true
-		}
-		return false
+		return len(pn) > len(groupId)
 	}
 
 	groupId = "org.springframework.security.supersecurity"
