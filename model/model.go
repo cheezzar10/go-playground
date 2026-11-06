@@ -20,10 +20,9 @@ type Circle struct {
 
 func (c Circle) String() string {
 	return fmt.Sprintf("Circle(Center=(%.1f, %.1f), Radius=%.1f)", c.Center.X, c.Center.X, c.Radius)
-
 }
 
-func New(maker string, model string) *Car {
+func NewCar(maker string, model string) *Car {
 	return &Car{maker, model}
 }
 

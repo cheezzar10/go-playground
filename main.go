@@ -47,7 +47,7 @@ func typeAssertDemo(obj any) {
 }
 
 func reflectDemo() {
-	var obj any = model.New("Audi", "A6")
+	var obj any = model.NewCar("Audi", "A6")
 	objType := reflect.TypeOf(obj)
 	fmt.Printf("obj type: %s\n", objType)
 }
