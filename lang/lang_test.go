@@ -15,13 +15,14 @@ func TestNamedReturns(t *testing.T) {
 }
 
 func TestValuesSlice(t *testing.T) {
+	origin := m.Point{X: 0.0, Y: 0.0}
 	points := []m.Point{
-		{X: 0.0, Y: 0.0},
+		origin,
 		{X: 1.0, Y: 2.0},
 	}
 
 	point := points[0]
-	if point.X != 0.0 || point.Y != 0.0 {
+	if point != origin {
 		t.Error("unexpected origin coordinates")
 	}
 
