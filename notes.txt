@@ -13,6 +13,7 @@ how to use copy function
 *** installing staticcheck
 
 $ go install honnef.co/go/tools/cmd/staticcheck@2026.2.1
+$ go install honnef.co/go/tools/cmd/staticcheck@2026.2.2 (for go 1.27)
 
 *** linting with staticcheck
 

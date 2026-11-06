@@ -11,7 +11,7 @@ func TestJar(t *testing.T) {
 	if err != nil {
 		t.Error("failed to resolve user home dir:", err)
 	}
-	jarPath := filepath.Join(home, "Applications", "lcat8", "lib", "artemis-recovery-8.0.16-36.jar")
+	jarPath := filepath.Join(home, "Applications", "lcat8", "lib", "tomee-config-8.0.14.jar")
 	err = New(jarPath)
 	if err != nil {
 		t.Error("failed to read jar:", err)
