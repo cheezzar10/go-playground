@@ -4,6 +4,8 @@ import (
 	"archive/zip"
 	"errors"
 	"fmt"
+	"path/filepath"
+	"strings"
 )
 
 // may be custom type with Close()
@@ -25,4 +27,14 @@ func New(path string) (err error) {
 	}
 
 	return err
+}
+
+func HasSuffix(path string, suffix string) bool {
+	ext := filepath.Ext(path)
+	if ext == "" {
+		return strings.HasSuffix(path, suffix)
+	}
+
+	pathWoExt, _ := strings.CutSuffix(path, ext)
+	return strings.HasSuffix(pathWoExt, suffix)
 }
