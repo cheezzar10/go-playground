@@ -1,9 +1,11 @@
 package lang
 
 import (
-	m "github.com/cheezzar10/go-playground/model"
+	"fmt"
 	"testing"
 	"unsafe"
+
+	m "github.com/cheezzar10/go-playground/model"
 )
 
 func TestIterateNilSlice(t *testing.T) {
@@ -49,4 +51,9 @@ func TestValuesArray(t *testing.T) {
 	if pointsSliceLength != 1 {
 		t.Error("unexpected points slice length:", pointsSliceLength)
 	}
+}
+
+func TestSliceToString(t *testing.T) {
+	vendors := []string{"GHSA", "NVD"}
+	fmt.Printf("vendors: %v\n", vendors)
 }
