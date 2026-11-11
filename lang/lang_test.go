@@ -56,4 +56,9 @@ func TestValuesArray(t *testing.T) {
 func TestSliceToString(t *testing.T) {
 	vendors := []string{"GHSA", "NVD"}
 	fmt.Printf("vendors: %v\n", vendors)
+
+	vendorsStr := fmt.Sprintf("%s", vendors)
+	if vendorsStr != "[GHSA NVD]" {
+		t.Error("unexpected:", vendorsStr)
+	}
 }

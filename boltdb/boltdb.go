@@ -7,12 +7,42 @@ import (
 	bolt "go.etcd.io/bbolt"
 )
 
-func Open(path string) (*bolt.DB, error) {
+// DB wraps a Bolt database.
+type DB struct {
+	db *bolt.DB
+}
+
+// OpenDB opens a Bolt database at path.
+func OpenDB(path string) (*DB, error) {
 	db, err := bolt.Open(path, 0600, nil)
 	if err != nil {
 		return nil, err
 	}
-	return db, nil
+
+	return &DB{db: db}, nil
+}
+
+// ListBuckets returns copies of all top-level bucket names.
+func (db *DB) ListBuckets() ([][]byte, error) {
+	var buckets [][]byte
+
+	err := db.db.View(func(tx *bolt.Tx) error {
+		return tx.ForEach(func(bucketName []byte, _ *bolt.Bucket) error {
+			bucketNameCopy := make([]byte, len(bucketName), cap(bucketName))
+			copy(bucketNameCopy, bucketName)
+			buckets = append(buckets, bucketNameCopy)
+			return nil
+		})
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return buckets, nil
+}
+
+func (db *DB) Close() error {
+	return db.db.Close()
 }
 
 func ReadBucket(db *bolt.DB, bucketId string) error {
@@ -31,13 +61,4 @@ func ReadBucket(db *bolt.DB, bucketId string) error {
 	}
 
 	return nil
-}
-
-func ReadBuckets(db *bolt.DB) error {
-	return db.View(func(tx *bolt.Tx) error {
-		return tx.ForEach(func(name []byte, bucket *bolt.Bucket) error {
-			fmt.Printf("bucket name: %s\n", string(name))
-			return nil
-		})
-	})
 }

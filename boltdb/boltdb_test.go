@@ -1,21 +1,22 @@
 package boltdb
 
 import (
+	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 )
 
-func TestOpen(t *testing.T) {
+func TestDBListBuckets(t *testing.T) {
 	homePath, err := os.UserHomeDir()
 	if err != nil {
 		t.Fatal("failed to get user home directory", err)
 	}
-	dbPath := filepath.Join(homePath, ".cache", "trivy", "fanal", "fanal.db")
 
-	db, err := Open(dbPath)
+	db, err := OpenDB(filepath.Join(homePath, ".cache", "trivy", "db", "trivy.db"))
 	if err != nil {
-		t.Fatal("failed to open db:", err)
+		t.Fatal("failed to open DB:", err)
 	}
 
 	defer func() {
@@ -25,14 +26,14 @@ func TestOpen(t *testing.T) {
 		}
 	}()
 
-	err = ReadBuckets(db)
+	buckets, err := db.ListBuckets()
 	if err != nil {
-		t.Fatal("failed to read buckets:", err)
+		t.Fatal("failed to list buckets:", err)
 	}
 
-	// 'blob', 'artifact' buckets
-	err = ReadBucket(db, "blob")
-	if err != nil {
-		t.Fatal("failed to read bucket:", err)
+	for _, buckName := range buckets {
+		if bytes.HasPrefix(buckName, []byte("maven::")) {
+			fmt.Printf("bucket: %s\n", string(buckName))
+		}
 	}
 }
