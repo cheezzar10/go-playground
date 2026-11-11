@@ -86,3 +86,26 @@ func (b *Bucket) ListKeys() ([][]byte, error) {
 
 	return keys, nil
 }
+
+// GetValue returns a copy of the value associated with key.
+func (b *Bucket) GetValue(key []byte) ([]byte, error) {
+	var value []byte
+
+	err := b.db.db.View(func(tx *bolt.Tx) error {
+		buck := tx.Bucket(b.name)
+		if buck == nil {
+			return nil
+		}
+
+		val := buck.Get(key)
+		if val != nil {
+			value = append([]byte{}, val...)
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return value, nil
+}

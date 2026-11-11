@@ -17,7 +17,7 @@ func getDBPath() (string, error) {
 	return filepath.Join(homePath, ".cache", "trivy", "db", "trivy.db"), nil
 }
 
-func TestListBuckets(t *testing.T) {
+func TestDBListBuckets(t *testing.T) {
 	dbPath, err := getDBPath()
 	if err != nil {
 		t.Fatal(err)
@@ -53,7 +53,7 @@ func TestListBuckets(t *testing.T) {
 	}
 }
 
-func TestGetBucket(t *testing.T) {
+func TestDBGetBucket(t *testing.T) {
 	dbPath, err := getDBPath()
 	if err != nil {
 		t.Fatal("failure:", err)
@@ -76,12 +76,29 @@ func TestGetBucket(t *testing.T) {
 		t.Fatal("failed to get bucket:", err)
 	}
 
-	keys, err := buck.ListKeys()
+	buckKeys, err := buck.ListKeys()
 	if err != nil {
 		t.Fatal("failed to get bucket keys:", err)
 	}
 
-	for _, k := range keys {
-		fmt.Printf("bucket key: %s\n", string(k))
+	buckKey := []byte("com.fasterxml.jackson.core:jackson-core")
+
+	found := false
+	for _, k := range buckKeys {
+		if bytes.Equal(k, buckKey) {
+			found = true
+			break
+		}
 	}
+
+	if !found {
+		t.Fatal("failed to find jackson-core key")
+	}
+
+	buckVal, err := buck.GetValue(buckKey)
+	if err != nil {
+		t.Fatal("failed to get bucket value:", buckVal)
+	}
+
+	fmt.Printf("buck value: %s\n", string(buckVal))
 }
