@@ -62,3 +62,20 @@ func TestSliceToString(t *testing.T) {
 		t.Error("unexpected:", vendorsStr)
 	}
 }
+
+func TestUnicodeString(t *testing.T) {
+	bts := []byte{0x3e, 0x3d, 0x32, 0x2e, 0x31, 0x39, 0x2e, 0x30, 0x2c, 0x20, 0x3c, 0x32, 0x2e, 0x32, 0x31, 0x2e, 0x37}
+	fmt.Printf("bytes string: %s\n", string(bts))
+	str := "\u003e=2.19.0, \u003c2.21.7"
+	for _, b := range []byte(str) {
+		fmt.Printf("0x%x, ", b)
+	}
+	fmt.Println()
+
+	symbols := "\u4e16\u754c"
+	fmt.Printf("symbols length: %d\n", len(symbols))
+	for _, s := range symbols {
+		fmt.Printf("%q ", s)
+	}
+	fmt.Println()
+}

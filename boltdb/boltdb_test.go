@@ -9,12 +9,12 @@ import (
 )
 
 func getDBPath() (string, error) {
-	homePath, err := os.UserHomeDir()
+	userCachePath, err := os.UserCacheDir()
 	if err != nil {
-		return "", fmt.Errorf("failed to get user home directory: %w", err)
+		return "", fmt.Errorf("failed to get user cache directory: %w", err)
 	}
 
-	return filepath.Join(homePath, ".cache", "trivy", "db", "trivy.db"), nil
+	return filepath.Join(userCachePath, "trivy", "db", "trivy.db"), nil
 }
 
 func TestDBListBuckets(t *testing.T) {
