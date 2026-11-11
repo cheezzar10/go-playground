@@ -2,8 +2,6 @@
 package boltdb
 
 import (
-	"fmt"
-
 	bolt "go.etcd.io/bbolt"
 )
 
@@ -27,10 +25,8 @@ func (db *DB) ListBuckets() ([][]byte, error) {
 	var buckets [][]byte
 
 	err := db.db.View(func(tx *bolt.Tx) error {
-		return tx.ForEach(func(bucketName []byte, _ *bolt.Bucket) error {
-			bucketNameCopy := make([]byte, len(bucketName), cap(bucketName))
-			copy(bucketNameCopy, bucketName)
-			buckets = append(buckets, bucketNameCopy)
+		return tx.ForEach(func(buckName []byte, _ *bolt.Bucket) error {
+			buckets = append(buckets, append([]byte{}, buckName...))
 			return nil
 		})
 	})
@@ -45,20 +41,48 @@ func (db *DB) Close() error {
 	return db.db.Close()
 }
 
-func ReadBucket(db *bolt.DB, bucketId string) error {
-	err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(bucketId))
+type Bucket struct {
+	db   *DB
+	name []byte
+}
+
+func (db *DB) GetBucket(buckName []byte) (*Bucket, error) {
+	var bucket *Bucket
+	err := db.db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(buckName)
 		if b == nil {
-			return fmt.Errorf("boltdb: bucket %q not found", string(bucketId))
+			return nil
 		}
-		return b.ForEach(func(k, v []byte) error {
-			fmt.Printf("entry key: %s\n", string(k))
+
+		bucket = &Bucket{db, buckName}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return bucket, nil
+}
+
+func (b *Bucket) ListKeys() ([][]byte, error) {
+	keys := [][]byte{}
+
+	err := b.db.db.View(func(tx *bolt.Tx) error {
+		buck := tx.Bucket(b.name)
+		if buck == nil {
+			// handle
+			return nil
+		}
+
+		return buck.ForEach(func(key, val []byte) error {
+			keys = append(keys, append([]byte{}, key...))
 			return nil
 		})
 	})
 	if err != nil {
-		return fmt.Errorf("boltdb: read bucket %q: %w", bucketId, err)
+		return nil, err
 	}
 
-	return nil
+	return keys, nil
 }
