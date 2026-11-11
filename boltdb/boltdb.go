@@ -2,6 +2,7 @@
 package boltdb
 
 import (
+	"fmt"
 	bolt "go.etcd.io/bbolt"
 )
 
@@ -46,6 +47,7 @@ type Bucket struct {
 	name []byte
 }
 
+// introduce bucket path: bucket/sub-bucket/sub-sub-bucket
 func (db *DB) GetBucket(buckName []byte) (*Bucket, error) {
 	var bucket *Bucket
 	err := db.db.View(func(tx *bolt.Tx) error {
@@ -101,6 +103,15 @@ func (b *Bucket) GetValue(key []byte) ([]byte, error) {
 		if val != nil {
 			value = append([]byte{}, val...)
 		}
+		subBuck := buck.Bucket(key)
+		err := subBuck.ForEach(func(k, v []byte) error {
+			fmt.Printf("subbuck %s -> %s\n", string(k), string(v))
+			return nil
+		})
+		if err != nil {
+			return err
+		}
+
 		return nil
 	})
 	if err != nil {
