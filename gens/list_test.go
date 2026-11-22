@@ -20,7 +20,6 @@ func TestListAppend(t *testing.T) {
 	const initialCap int = 1
 	list := NewList[int](initialCap)
 
-	initialLen := list.Len()
 	if got, want := list.Len(), 0; got != want {
 		t.Errorf("initial length after construction = %d, want %d", got, want)
 	}
@@ -29,13 +28,23 @@ func TestListAppend(t *testing.T) {
 		t.Errorf("initial capacity after construction = %d, want %d", got, want)
 	}
 
-	list.Append(1)
-	if got, want := list.Len(), initialLen+1; got != want {
+	wantElems := []int{1, 2}
+	for _, e := range wantElems {
+		list.Append(e)
+	}
+
+	if got, want := list.Len(), len(wantElems); got != want {
 		t.Errorf("length after append = %d, want %d", got, want)
 	}
 
+	for i, e := range list.Iter() {
+		if got, want := e, wantElems[i]; got != want {
+			t.Errorf("unexpected list element at index %d: got = %d, want %d", i, got, want)
+		}
+	}
+
 	desiredLen := 5
-	for i := 2; i <= desiredLen; i++ {
+	for i := wantElems[len(wantElems)-1] + 1; list.Len() < desiredLen; i++ {
 		list.Append(i)
 	}
 	if got := list.Len(); got != desiredLen {

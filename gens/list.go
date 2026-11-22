@@ -1,5 +1,9 @@
 package gens
 
+import (
+	"iter"
+)
+
 type List[T comparable] struct {
 	elems []T
 }
@@ -32,6 +36,14 @@ func (list *List[T]) Reserve(cap int) {
 	list.elems = newElems
 }
 
-// add list iterators, to check actual list content after modifications
+func (list List[T]) Iter() iter.Seq2[int, T] {
+	return func(yield func(i int, e T) bool) {
+		for idx, elem := range list.elems {
+			if !yield(idx, elem) {
+				return
+			}
+		}
+	}
+}
 
 // Clip() - shrinks capacity to length
