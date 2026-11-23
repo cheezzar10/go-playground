@@ -77,3 +77,29 @@ func TestListReserve(t *testing.T) {
 		t.Errorf("length after reducing reserve = %d, want %d", got, initialLen)
 	}
 }
+
+func TestListClip(t *testing.T) {
+	const initialCap int = 10
+	list := NewList[int](initialCap)
+	wantElems := []int{1, 2, 3}
+	for _, e := range wantElems {
+		list.Append(e)
+	}
+
+	if got, want := list.Cap(), initialCap; got != want {
+		t.Errorf("initial capacity = %d, want %d", got, want)
+	}
+
+	list.Clip()
+	if got, want := list.Cap(), len(wantElems); got != want {
+		t.Errorf("capacity after clip = %d, want %d", got, want)
+	}
+	if got, want := list.Len(), len(wantElems); got != want {
+		t.Errorf("length after clip = %d, want %d", got, want)
+	}
+	for i, e := range list.Iter() {
+		if got, want := e, wantElems[i]; got != want {
+			t.Errorf("unexpected list element after clip at index %d: got = %d, want %d", i, got, want)
+		}
+	}
+}

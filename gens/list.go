@@ -46,4 +46,8 @@ func (list List[T]) Iter() iter.Seq2[int, T] {
 	}
 }
 
-// Clip() - shrinks capacity to length
+func (list *List[T]) Clip() {
+	clippedElems := make([]T, list.Len())
+	copy(clippedElems, list.elems)
+	list.elems = clippedElems
+}
