@@ -86,17 +86,40 @@ func langDemo() {
 	lang.SliceCopyDemo()
 }
 
+func pointersDemo() {
+	p1 := model.Point{
+		X: 1.0,
+		Y: 2.0,
+	}
+
+	p2 := p1
+	if p1 == p2 {
+		fmt.Println("points are equal")
+	}
+
+	p1Ptr := &p1
+	fmt.Printf("p1Ptr = %p\n", p1Ptr)
+	p2Ptr := &p2
+	fmt.Printf("p2Ptr = %p\n", p2Ptr)
+	if p1Ptr == p2Ptr {
+		fmt.Println("p1Ptr == p2Ptr")
+	} else {
+		fmt.Println("p1Ptr != p2Ptr")
+	}
+}
+
 func main() {
-	structDemo()
-	jsonWriteDemo()
-	interfaceVarDemo()
-	backgroundContextDemo()
+	// structDemo()
+	// jsonWriteDemo()
+	// interfaceVarDemo()
+	// backgroundContextDemo()
 
 	car := &model.Car{Maker: "Mercedes-Benz", Model: "E200d"}
 	typeAssertDemo(car)
 
-	reflectDemo()
-	errorHandlingDemo()
+	// reflectDemo()
+	// errorHandlingDemo()
 
-	langDemo()
+	// langDemo()
+	pointersDemo()
 }
