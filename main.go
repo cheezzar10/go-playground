@@ -116,6 +116,7 @@ func main() {
 
 	car := &model.Car{Maker: "Mercedes-Benz", Model: "E200d"}
 	typeAssertDemo(car)
+	typeAssertDemo(nil)
 
 	// reflectDemo()
 	// errorHandlingDemo()
