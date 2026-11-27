@@ -2,6 +2,7 @@ package main
 
 // migrate to encoding/json/v2
 import (
+	"archive/zip"
 	"context"
 	"encoding/json"
 	"errors"
@@ -108,6 +109,24 @@ func pointersDemo() {
 	}
 }
 
+func feedCache() {
+	zipFile, err := os.OpenFile("vendor-feeds.zip", os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		fmt.Printf("failed to open file: %s\n", err)
+		return
+	}
+
+	defer zipFile.Close()
+
+	zipWriter := zip.NewWriter(zipFile)
+	defer zipWriter.Close()
+
+	_, err = zipWriter.Create("Axiom:Trusted Repository/")
+	if err != nil {
+		fmt.Printf("dir entry creation failed: %s\n", err)
+	}
+}
+
 func main() {
 	// structDemo()
 	// jsonWriteDemo()
@@ -122,5 +141,6 @@ func main() {
 	// errorHandlingDemo()
 
 	// langDemo()
-	pointersDemo()
+	// pointersDemo()
+	feedCache()
 }
