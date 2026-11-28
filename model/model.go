@@ -13,6 +13,10 @@ type Point struct {
 	X, Y float64
 }
 
+func (p Point) String() string {
+	return fmt.Sprintf("Point(%.1f, %.1f)", p.X, p.Y)
+}
+
 type Circle struct {
 	Center Point
 	Radius float64

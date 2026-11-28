@@ -107,6 +107,9 @@ func pointersDemo() {
 	} else {
 		fmt.Println("p1Ptr != p2Ptr")
 	}
+
+	p1Ptr = nil
+	fmt.Println(p1Ptr.String())
 }
 
 func feedCache() {
@@ -141,6 +144,6 @@ func main() {
 	// errorHandlingDemo()
 
 	// langDemo()
-	// pointersDemo()
-	feedCache()
+	pointersDemo()
+	// feedCache()
 }
